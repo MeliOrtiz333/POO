@@ -1,0 +1,50 @@
+__Nombre = ""
+    __DineroInicial = 0
+    __Depositos = []
+
+    fichas_actuales = 0
+    manos = []
+
+    jugando = True
+
+    def __init__(self, nombre, dinero):
+        self.__Nombre = nombre
+        self.__DineroInicial = dinero
+        self.fichas_actuales = dinero
+
+    @property
+    def nombre(self):
+        return self.__Nombre
+
+    def resumen(self):
+        print("**************  RESUMEN  **************")
+        print("Nombre de jugador:", self.nombre)
+        print("Monto Inicial: ", self.__DineroInicial)
+        print("Historial de Depósitos:")
+        for i in range(self.__Depositos.length):
+            print("\t", (i+1), ".", self.__Depositos[i])
+        print("Saldo disponible en cuenta: ", self.fichas_actuales)
+        #print("Ganancias:", self.calcularGanancia())
+        #print("Pérdidas:", self.calcularPerdida())
+
+    def puede_jugar(self):
+        return self.fichas_actuales > 0
+
+    def depositar(self):
+        respuesta = ""
+        while respuesta != "n" and respuesta != "s":
+            respuesta = input("¿Quieres depositar más dinero en tu cuenta? s/n:").str.lower()
+            if respuesta == "s":
+                f = int(input("Ingresa la cantidad a depositar: "))
+                if f > 0:
+                    self.fichas_actuales += f
+                    self.__Depositos.append(f)
+                    return True
+                else:
+                    print("No es un monto válido")
+                    respuesta = ""
+            elif respuesta == "n":
+                return False
+            else:
+                print("\n¡Parece que te has equivocado!")
+
